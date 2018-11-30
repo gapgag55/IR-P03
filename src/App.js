@@ -1,47 +1,26 @@
-import React from 'react';
-import { Form, Icon, Input, Button } from 'antd';
-import "typeface-roboto";
-// import 'antd/dist/antd.css';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Search from './containers/search';
+import Question from './containers/question';
+import Sentiment from './containers/sentiment';
 import './App.css';
 
-const FormItem = Form.Item;
-
-class App extends React.Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
-  }
-
+class App extends Component {
   render() {
-    const { getFieldDecorator } = this.props.form;
     return (
-      <div className="container flex-column">
-        <div className="bg"></div>
-        <h1 className="headline">PANTIP LISTENING</h1>
-        <Form onSubmit={this.handleSubmit} className="search-form">
-          <FormItem>
-            {getFieldDecorator('keyword')(
-              <Input suffix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Keyword" size="large" />
-            )}
-          </FormItem>
-          <FormItem>
-            <div className="flex-between">
-              <Button type="primary" htmlType="submit" size="large" className="search-button">
-                Search Sentiment
-              </Button>
-              <Button type="primary" htmlType="submit" size="large" className="search-button">
-                Search Question
-              </Button>
-            </div>
-          </FormItem>
-        </Form>
-      </div>
+      <Router>
+        <div>
+          <div className="bg"></div>
+          <div className="container">
+            {/* <Route exact path="/" component={Search} /> */}
+            <Route exact path="/" component={Search} />
+            <Route exact path="/sentiment/:keyword" component={Sentiment} />
+            <Route exact path="/question/:keyword" component={Question} />
+          </div>
+        </div>
+      </Router>
     );
   }
 }
 
-export default Form.create()(App);
+export default App;
