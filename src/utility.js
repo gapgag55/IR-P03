@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   max-width: 900px;
   margin: 0 auto;
-  padding-top: 120px;
+  padding: 120px 0;
 `;
 
 export const FlexRow = styled.div`
@@ -73,7 +73,7 @@ export const BoxSpan = styled.span`
 `;
 
 export const LoadButton = styled.div`
-  margin-top: 10px;
+  margin-top: 20px;
   text-align: center;
   background-color: #205E7F !important;
   border-color: #85D6F1;

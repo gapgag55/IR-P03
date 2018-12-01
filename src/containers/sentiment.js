@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Wrapper, Head } from '../utility';
+import { Container, Wrapper, Head, FlexRow } from '../utility';
 
 import Box from '../components/box';
 import Loadmore from '../components/loadmore';
@@ -23,8 +23,8 @@ class Sentiment extends Component {
 
   render() {
     return (
-      <div>
-        <div className="container flex-row">
+      <Container>
+        <FlexRow>
           <Wrapper>
             <Head>Bad Comments</Head>
             <Box />
@@ -38,9 +38,9 @@ class Sentiment extends Component {
             <Box />
             <Box />
           </Wrapper>
-        </div>
+        </FlexRow>
         <Loadmore onClick={this.viewmore}/>
-      </div>
+      </Container>
     );
   }
 }

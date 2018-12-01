@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Search from './containers/search';
 import Question from './containers/question';
 import Sentiment from './containers/sentiment';

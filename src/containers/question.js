@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Wrapper, Head } from '../utility';
+import { Container, FlexColumn, Wrapper, Head } from '../utility';
 
 import Box from '../components/box';
 import Loadmore from '../components/loadmore';
@@ -23,8 +23,8 @@ class Question extends Component {
 
   render() {
     return (
-      <div>
-        <div className="container flex-column" style={{maxWidth: '80%'}}>
+      <Container>
+        <FlexColumn>
           <Wrapper>
             <Head>Question</Head>
             <Box question={true} />
@@ -32,8 +32,8 @@ class Question extends Component {
             <Box question={true} />
           </Wrapper>
           <Loadmore onClick={this.viewmore}/>
-        </div>
-      </div>
+        </FlexColumn>
+      </Container>
     );
   }
 }
