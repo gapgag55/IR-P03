@@ -9,7 +9,37 @@ class Question extends Component {
     super(props);
 
     this.state = {
-      questionItems: []
+      questionItems: [{
+        id: '38324888',
+        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
+        date: '26 Dec 2018',
+        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
+        room: 'คำถาม',
+        type: 'good'
+      }, {
+        id: '38324888',
+        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
+        date: '26 Dec 2018',
+        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
+        room: 'คำถาม',
+        type: 'good'
+      }, {
+        id: '38324888',
+        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
+        date: '26 Dec 2018',
+        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
+        room: 'คำถาม',
+        type: 'good'
+      }, {
+        id: '38324888',
+        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
+        date: '26 Dec 2018',
+        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
+        room: 'คำถาม',
+        type: 'good'
+      }],
+      defaultItems: 2,
+      viewItem: 2 
     };
   }
 
@@ -19,19 +49,26 @@ class Question extends Component {
     this.setState({});
   }
 
-  viewmore = () => {}
+  viewmore = () => {
+    this.setState({
+      defaultItems: this.state.defaultItems + this.state.viewItem
+    })
+  }
 
   render() {
+    const { questionItems, defaultItems } = this.state;
     return (
       <Container>
         <FlexColumn>
           <Wrapper>
             <Head>Question</Head>
-            <Box question={true} />
-            <Box question={true} />
-            <Box question={true} />
+            {questionItems.map((item, index) => {
+              if (index < defaultItems) {
+                return <Box item={item} />
+              }
+            })}
           </Wrapper>
-          <Loadmore onClick={this.viewmore}/>
+          {defaultItems < questionItems.length && <Loadmore onClick={this.viewmore}/>}
         </FlexColumn>
       </Container>
     );

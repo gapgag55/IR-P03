@@ -21,12 +21,12 @@ class Search extends Component {
           <div className="search-form">
             <Input placeholder="Keyword" size="large" className="input" />
             <FlexRowCenter>
-              <Button onClick={this.props.onSentimentSearch}>
-                Search Sentiment
-              </Button>
-              <Button onClick={this.props.onQuestionSearch}>
-                Search Question
-              </Button>
+              <Link>
+                <Button>Search Sentiment</Button>
+              </Link>
+              <Link>
+                <Button>Search Question</Button>
+              </Link>
             </FlexRowCenter>
           </div>
         </FlexColumn>

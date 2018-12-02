@@ -9,37 +9,107 @@ class Sentiment extends Component {
     super(props);
 
     this.state = {
-      badItems: [],
-      goodItems: []
+      goodItems: [{
+        id: '38324888',
+        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
+        date: '26 Dec 2018',
+        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
+        room: 'คำถาม',
+        type: 'bad'
+      }, {
+        id: '38324888',
+        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
+        date: '26 Dec 2018',
+        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
+        room: 'คำถาม',
+        type: 'bad'
+      }, {
+        id: '38324888',
+        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
+        date: '26 Dec 2018',
+        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
+        room: 'คำถาม',
+        type: 'bad'
+      }, {
+        id: '38324888',
+        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
+        date: '26 Dec 2018',
+        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
+        room: 'คำถาม',
+        type: 'bad'
+      }],
+      badItems: [{
+        id: '38324888',
+        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
+        date: '26 Dec 2018',
+        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
+        room: 'คำถาม',
+        type: 'good'
+      }, {
+        id: '38324888',
+        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
+        date: '26 Dec 2018',
+        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
+        room: 'คำถาม',
+        type: 'good'
+      }, {
+        id: '38324888',
+        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
+        date: '26 Dec 2018',
+        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
+        room: 'คำถาม',
+        type: 'good'
+      }, {
+        id: '38324888',
+        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
+        date: '26 Dec 2018',
+        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
+        room: 'คำถาม',
+        type: 'good'
+      }],
+      defaultItems: 2,
+      viewItem: 2 
     };
   }
 
   componentWillMount() {
-     // Get Keyword Params from react router
+    // Get Keyword Params from react router
+    // API to python backend
+
+
      this.setState({});
   }
 
-  viewmore = () => {}
+  viewmore = () => {
+    this.setState({
+      defaultItems: this.state.defaultItems + this.state.viewItem
+    })
+  }
 
   render() {
+    const { badItems, goodItems, defaultItems } = this.state;
     return (
       <Container>
         <FlexRow>
           <Wrapper>
             <Head>Bad Comments</Head>
-            <Box />
-            <Box />
-            <Box />
+            {badItems.map((item, index) => {
+              if (index < defaultItems) {
+                return <Box item={item} />
+              }
+            })}
           </Wrapper>
           <div style={{padding: '10px'}}></div>
           <Wrapper>
             <Head>Good Comments</Head>
-            <Box />
-            <Box />
-            <Box />
+            {goodItems.map((item, index) => {
+              if (index < defaultItems) {
+                return <Box item={item} />
+              }
+            })}
           </Wrapper>
         </FlexRow>
-        <Loadmore onClick={this.viewmore}/>
+        {(defaultItems < goodItems.length || defaultItems < badItems.length) && <Loadmore onClick={this.viewmore}/>}
       </Container>
     );
   }
