@@ -1,0 +1,35 @@
+body {
+  background-color: #3C3963;
+  font-family: Arial, Helvetica, Sans-serif, Geneva, Tahoma;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+
+.bg {
+  width: 100%;
+  height: 220px;
+  display: block;
+  background: url(//ptcdn.info/doodle/2018/pantip-2018.png) no-repeat center;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-top: 120px;
+}
+
+.search-form {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.search-button {
+  margin-right: 10px;
+}
