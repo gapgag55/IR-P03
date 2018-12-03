@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import striptags from 'striptags'
 import {
   Headspan,
   Container,
@@ -16,71 +18,68 @@ class Question extends Component {
     super(props);
 
     this.state = {
-      questionItems: [{
-        id: '38324888',
-        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
-        date: '26 Dec 2018',
-        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
-        room: 'คำถาม',
-        type: 'good'
-      }, {
-        id: '38324888',
-        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
-        date: '26 Dec 2018',
-        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
-        room: 'คำถาม',
-        type: 'good'
-      }, {
-        id: '38324888',
-        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
-        date: '26 Dec 2018',
-        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
-        room: 'คำถาม',
-        type: 'good'
-      }, {
-        id: '38324888',
-        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
-        date: '26 Dec 2018',
-        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
-        room: 'คำถาม',
-        type: 'good'
-      }],
-      defaultItems: 2,
-      viewItem: 2 
+      questionItems: [],
+      page: 1,
     };
   }
 
   componentWillMount() {
-    const { keyword } = this.props.match.params;
-    // Get Keyword Params from react router
-    this.setState({});
+    this.loadItems();
   }
 
-  viewmore = () => {
+  nextPage = () => {
+    const { page } = this.state;
+
     this.setState({
-      defaultItems: this.state.defaultItems + this.state.viewItem
+      page: page + 1
+    }, () => {
+      this.loadItems();
     })
   }
 
+  loadItems = () => {
+    const { page } = this.state;
+    const { keyword } = this.props.match.params;
+
+    axios.get(`http://localhost:5000/api/pantip/${keyword}/${page}`).then(result => {
+  
+      const items = result['data'];
+
+      items.map(item => {
+        let { id, text, type, tag } = item
+        text = striptags(text.replace(/[&]nbsp[;]/gi," "))
+
+        if (type == 'ques') {
+    
+          this.setState({
+            questionItems: [
+              ...this.state.questionItems, {id, title: text, tag}],
+          })
+
+        }
+
+      })
+    });
+  }
+
+
   render() {
-    const { questionItems, defaultItems } = this.state;
+    const { questionItems } = this.state;
     return (
       <Container>
         <FlexColumn>
           <Wrapper>
             <Head>
-              <FlexRowBetween style={{width: '100%'}}>
+              <FlexRowBetween style={{ width: '100%' }}>
                 <div>Question</div>
                 <Headspan>{questionItems.length} items</Headspan>
               </FlexRowBetween>
             </Head>
-            {questionItems.map((item, index) => {
-              if (index < defaultItems) {
-                return <Box item={item} />
-              }
-            })}
+            {questionItems.map((item, index) => (
+              <Box item={item} />
+            ))}
           </Wrapper>
-          {defaultItems < questionItems.length && <Loadmore onClick={this.viewmore}/>}
+          {<Loadmore onClick={this.nextPage} />}
         </FlexColumn>
       </Container>
     );

@@ -5,7 +5,7 @@ class Loadmore extends Component {
   render() {
     return (
       <LoadButton onClick={() => this.props.onClick()}>
-        Loadmore...
+        Click to load
       </LoadButton>
     );
   }

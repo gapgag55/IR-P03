@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 120px 0;
 `;
@@ -29,6 +29,7 @@ export const FlexRowCenter= styled(FlexRow)`
 export const Wrapper = styled.div`
   width: 100%;
   border: solid 1px #6C73A6;
+  height: 100%;
 `;
 
 export const Headline = styled.h1`
@@ -71,6 +72,12 @@ export const BoxWrapper = styled.div`
 export const BoxTitle = styled.h1`
   font-size: 14px;
   color: #c2c2c2;
+  font-weight: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
   
   &:hover {
     color: #FFFFFF;
@@ -101,6 +108,8 @@ export const LoadButton = styled.div`
   font-size: 14px;
   cursor: pointer;
   padding: 10px;
+  width: 50%;
+  margin: 20px auto;
 `;
 
 export const ButtonQuestion = styled.span`

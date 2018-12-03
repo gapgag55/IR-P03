@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import striptags from 'striptags'
 import {
   Headspan,
   Container,
@@ -16,117 +18,107 @@ class Sentiment extends Component {
     super(props);
 
     this.state = {
-      goodItems: [{
-        id: '38324888',
-        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
-        date: '26 Dec 2018',
-        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
-        room: 'คำถาม',
-        type: 'bad'
-      }, {
-        id: '38324888',
-        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
-        date: '26 Dec 2018',
-        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
-        room: 'คำถาม',
-        type: 'bad'
-      }, {
-        id: '38324888',
-        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
-        date: '26 Dec 2018',
-        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
-        room: 'คำถาม',
-        type: 'bad'
-      }, {
-        id: '38324888',
-        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
-        date: '26 Dec 2018',
-        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
-        room: 'คำถาม',
-        type: 'bad'
-      }],
-      badItems: [{
-        id: '38324888',
-        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
-        date: '26 Dec 2018',
-        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
-        room: 'คำถาม',
-        type: 'good'
-      }, {
-        id: '38324888',
-        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
-        date: '26 Dec 2018',
-        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
-        room: 'คำถาม',
-        type: 'good'
-      }, {
-        id: '38324888',
-        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
-        date: '26 Dec 2018',
-        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
-        room: 'คำถาม',
-        type: 'good'
-      }, {
-        id: '38324888',
-        title: '4 ปีที่แล้วยังโดนไป 3 ลูก ปีนี้จะโดนกี่ลูก',
-        date: '26 Dec 2018',
-        tag: 'ศัลยกรรมความงาม, คลินิกความงาม',
-        room: 'คำถาม',
-        type: 'good'
-      }],
-      defaultItems: 2,
-      viewItem: 2 
+      goodItems: [],
+      neutralItems: [],
+      badItems: [],
+      page: 1,
     };
   }
 
   componentWillMount() {
-    // Get Keyword Params from react router
-    // API to python backend
-
-
-     this.setState({});
+    this.loadItems()
   }
 
-  viewmore = () => {
+  nextPage = () => {
+    const { page } = this.state;
+
     this.setState({
-      defaultItems: this.state.defaultItems + this.state.viewItem
+      page: page + 1
+    }, () => {
+      this.loadItems()
     })
   }
 
+  loadItems = () => {
+    const { page } = this.state;
+    const { keyword } = this.props.match.params;
+
+    axios.get(`http://localhost:5000/api/pantip/${keyword}/${page}`).then(result => {
+  
+      const items = result['data'];
+
+      items.map(item => {
+        let { id, text, type, tag } = item
+        text = striptags(text.replace(/[&]nbsp[;]/gi," "))
+
+        if (type == 'pos') {
+    
+          this.setState({
+            goodItems: [
+              ...this.state.goodItems, {id, title: text, tag}],
+          })
+
+        } else if (type == 'neg') {
+          
+          this.setState({
+            badItems: [...this.state.badItems, {id, title: text, tag}],
+          })
+
+        } else if (type == 'nue') {
+          
+          this.setState({
+            neutralItems: [...this.state.neutralItems, {id, title: text, tag}],
+          })
+
+        }
+
+      })
+    });
+  }
+
   render() {
-    const { badItems, goodItems, defaultItems } = this.state;
+    const { badItems, goodItems, neutralItems } = this.state;
+
     return (
       <Container>
         <FlexRow>
           <Wrapper>
             <Head>
-              <FlexRowBetween style={{width: '100%'}}>
-                <div>Bad Comments</div>
+              <FlexRowBetween style={{ width: '100%' }}>
+                <div>Negative Comments</div>
                 <Headspan>{badItems.length} items</Headspan>
               </FlexRowBetween>
             </Head>
-            {badItems.map((item, index) => {
-              if (index < defaultItems) {
-                return <Box item={item} />
-              }
-            })}
+            {badItems.map(item => (
+              <Box item={item} />
+            ))}
           </Wrapper>
-          <div style={{padding: '10px'}}></div>
+          <div style={{ padding: '10px' }}></div>
           <Wrapper>
             <Head>
-              <FlexRowBetween style={{width: '100%'}}>
-                <div>Good Comments</div>
+              <FlexRowBetween style={{ width: '100%' }}>
+                <div>Positive Comments</div>
                 <Headspan>{goodItems.length} items</Headspan>
               </FlexRowBetween>
             </Head>
-            {goodItems.map((item, index) => {
-              if (index < defaultItems) {
-                return <Box item={item} />
-              }
-            })}
+            {goodItems.map(item => (
+              <Box item={item} />
+            ))}
+          </Wrapper>
+          <div style={{ padding: '10px' }}></div>
+          <Wrapper>
+            <Head>
+              <FlexRowBetween style={{ width: '100%' }}>
+                <div>Neutral Comments</div>
+                <Headspan>{neutralItems.length} items</Headspan>
+              </FlexRowBetween>
+            </Head>
+            {neutralItems.map(item => (
+              <Box item={item} />
+            ))}
           </Wrapper>
         </FlexRow>
-        {(defaultItems < goodItems.length || defaultItems < badItems.length) && <Loadmore onClick={this.viewmore}/>}
+        {<Loadmore onClick={this.nextPage} />}
       </Container>
     );
   }

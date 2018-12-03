@@ -1,0 +1,7 @@
+Flask
+flask-cors
+requests
+requests
+bs4
+pythainlp
+sklearn

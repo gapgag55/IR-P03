@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import {
   Headline,
   Container,
@@ -10,24 +10,64 @@ import {
 } from '../utility';
 
 class Search extends Component {
-  onSentimentSearch = () => {}
+  constructor(props) {
+    super(props);
 
-  onQuestionSearch = () => {}
+    this.state = {
+      keyword: '',
+      error: false
+    }
+  }
+
+  onSentimentSearch = () => {
+    const { keyword, error } = this.state;
+
+    this.onValidate(() => {
+      this.props.history.push(`/sentiment/${keyword}`);
+    });
+  }
+
+  onQuestionSearch = () => {
+    const { keyword, error } = this.state;
+
+    this.onValidate(() => {
+      this.props.history.push(`/question/${keyword}`);
+    });
+  }
+
+  onValidate = (navigate) => {
+    if (this.state.keyword == '') {
+      this.setState({ error: true });
+    } else {
+      this.setState({ error: false }, () => {
+        navigate()
+      })
+    }
+  }
 
   render() {
+    const { keyword, error } = this.state;
+    
     return (
       <Container>
         <FlexColumn>
           <Headline>PANTIP LISTENING</Headline>
           <div className="search-form">
-            <Input placeholder="Keyword" size="large" className="input" />
+            <Input
+              placeholder="Keyword"
+              size="large"
+              className="input"
+              value={keyword}
+              onChange={e => this.setState({keyword: e.target.value})}
+            />
+            {error && <div style={{color: '#FFF', margin: '10px 0'}}>Please provide the keyword!</div>}
             <FlexRowCenter>
-              <Link>
+              <div onClick={this.onSentimentSearch}>
                 <Button>Search Sentiment</Button>
-              </Link>
-              <Link>
+              </div>
+              <div onClick={this.onQuestionSearch}>
                 <Button>Search Question</Button>
-              </Link>
+              </div>
             </FlexRowCenter>
           </div>
         </FlexColumn>

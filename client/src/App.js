@@ -5,18 +5,19 @@ import Question from './containers/question';
 import Sentiment from './containers/sentiment';
 import './App.css';
 
+import { Container } from './utility'
+
 class App extends Component {
   render() {
     return (
       <Router>
         <div>
           <div className="bg"></div>
-          <div className="container">
-            {/* <Route exact path="/" component={Search} /> */}
+          <Container>
             <Route exact path="/" component={Search} />
-            <Route exact path="/sentiment/:keyword" component={Sentiment} />
-            <Route exact path="/question/:keyword" component={Question} />
-          </div>
+            <Route path="/sentiment/:keyword" component={Sentiment} />
+            <Route path="/question/:keyword" component={Question} />
+          </Container>
         </div>
       </Router>
     );
