@@ -7,7 +7,8 @@ import {
   Wrapper,
   Head,
   FlexRow,
-  FlexRowBetween
+  FlexRowBetween,
+  NoResult
 } from '../utility';
 
 import Box from '../components/box';
@@ -89,7 +90,9 @@ class Sentiment extends Component {
                 <Headspan>{badItems.length} items</Headspan>
               </FlexRowBetween>
             </Head>
-            {badItems.map(item => (
+            {badItems.length == 0 ? 
+              <NoResult>No result found</NoResult>
+              : badItems.map(item => (
               <Box item={item} />
             ))}
           </Wrapper>
@@ -101,7 +104,9 @@ class Sentiment extends Component {
                 <Headspan>{goodItems.length} items</Headspan>
               </FlexRowBetween>
             </Head>
-            {goodItems.map(item => (
+            {goodItems.length == 0 ? 
+             <NoResult>No result found</NoResult>
+              : goodItems.map(item => (
               <Box item={item} />
             ))}
           </Wrapper>
@@ -113,7 +118,9 @@ class Sentiment extends Component {
                 <Headspan>{neutralItems.length} items</Headspan>
               </FlexRowBetween>
             </Head>
-            {neutralItems.map(item => (
+            {neutralItems.length == 0 ? 
+             <NoResult>No result found</NoResult>
+              : neutralItems.map(item => (
               <Box item={item} />
             ))}
           </Wrapper>

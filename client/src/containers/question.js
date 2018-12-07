@@ -7,7 +7,8 @@ import {
   FlexRowBetween,
   FlexColumn,
   Wrapper,
-  Head
+  Head,
+  NoResult
 } from '../utility';
 
 import Box from '../components/box';
@@ -57,7 +58,6 @@ class Question extends Component {
           })
 
         }
-
       })
     });
   }
@@ -75,8 +75,10 @@ class Question extends Component {
                 <Headspan>{questionItems.length} items</Headspan>
               </FlexRowBetween>
             </Head>
-            {questionItems.map((item, index) => (
-              <Box item={item} />
+            {questionItems.length == 0 ? 
+              <NoResult>No result found</NoResult>
+              : questionItems.map((item, index) => (
+                <Box item={item} />
             ))}
           </Wrapper>
           {<Loadmore onClick={this.nextPage} />}

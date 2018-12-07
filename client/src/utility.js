@@ -151,3 +151,8 @@ export const Button = styled.div`
     background-color: #2e2c4c;
   }
 `;
+
+export const NoResult = styled.p`
+  color: #FFF;
+  padding: 10px;
+`;
