@@ -51,6 +51,8 @@ class Question extends Component {
         let { id, text, type, tag } = item
         text = striptags(text.replace(/[&]nbsp[;]/gi," "))
 
+        if (text == '') return
+
         if (type == 'ques') {
     
           this.setState({

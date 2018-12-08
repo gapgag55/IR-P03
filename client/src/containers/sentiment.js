@@ -53,6 +53,8 @@ class Sentiment extends Component {
         let { id, text, type, tag } = item
         text = striptags(text.replace(/[&]nbsp[;]/gi," "))
 
+        if (text == '') return
+
         if (type == 'pos') {
     
           this.setState({
