@@ -23,6 +23,7 @@ class Sentiment extends Component {
       neutralItems: [],
       badItems: [],
       page: 1,
+      isLoading: true
     };
   }
 
@@ -73,12 +74,24 @@ class Sentiment extends Component {
 
         }
 
+        this.setState({
+          isLoading: false
+        })
+
       })
     });
   }
 
   render() {
-    const { badItems, goodItems, neutralItems } = this.state;
+    const { badItems, goodItems, neutralItems, isLoading } = this.state;
+
+    if (isLoading) {
+      return (
+        <Container>
+          <NoResult>Loading...</NoResult>
+        </Container>
+      )
+    }
 
     return (
       <Container>

@@ -21,6 +21,7 @@ class Question extends Component {
     this.state = {
       questionItems: [],
       page: 1,
+      isLoading: true
     };
   }
 
@@ -54,7 +55,9 @@ class Question extends Component {
     
           this.setState({
             questionItems: [
-              ...this.state.questionItems, {id, title: text, tag}],
+              ...this.state.questionItems, {id, title: text, tag}
+            ],
+            isLoading: false
           })
 
         }
@@ -64,7 +67,16 @@ class Question extends Component {
 
 
   render() {
-    const { questionItems } = this.state;
+    const { questionItems, isLoading } = this.state;
+
+    if (isLoading) {
+      return (
+        <Container>
+          <NoResult>Loading...</NoResult>
+        </Container>
+      )
+    }
+
     return (
       <Container>
         <FlexColumn>
