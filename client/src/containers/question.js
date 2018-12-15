@@ -51,9 +51,9 @@ class Question extends Component {
         let { id, text, type, tag } = item
         text = striptags(text.replace(/[&]nbsp[;]/gi," "))
 
-        if (text == '') return
+        if (!text) return
 
-        if (type == 'ques') {
+        if (type === 'ques') {
     
           this.setState({
             questionItems: [
@@ -63,6 +63,8 @@ class Question extends Component {
           })
 
         }
+
+        return item
       })
     });
   }
@@ -89,7 +91,7 @@ class Question extends Component {
                 <Headspan>{questionItems.length} items</Headspan>
               </FlexRowBetween>
             </Head>
-            {questionItems.length == 0 ? 
+            {questionItems.length === 0 ? 
               <NoResult>No result found</NoResult>
               : questionItems.map((item, index) => (
                 <Box item={item} />

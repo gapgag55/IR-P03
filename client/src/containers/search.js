@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 import {
   Headline,
   Container,
@@ -28,7 +27,7 @@ class Search extends Component {
   }
 
   onQuestionSearch = () => {
-    const { keyword, error } = this.state;
+    const { keyword } = this.state;
 
     this.onValidate(() => {
       this.props.history.push(`/question/${keyword}`);
@@ -36,7 +35,7 @@ class Search extends Component {
   }
 
   onValidate = (navigate) => {
-    if (this.state.keyword == '') {
+    if (this.state.keyword === '') {
       this.setState({ error: true });
     } else {
       this.setState({ error: false }, () => {

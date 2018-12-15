@@ -53,22 +53,22 @@ class Sentiment extends Component {
         let { id, text, type, tag } = item
         text = striptags(text.replace(/[&]nbsp[;]/gi," "))
 
-        if (text == '') return
+        if (!text) return
 
-        if (type == 'pos') {
+        if (type === 'pos') {
     
           this.setState({
             goodItems: [
               ...this.state.goodItems, {id, title: text, tag}],
           })
 
-        } else if (type == 'neg') {
+        } else if (type === 'neg') {
           
           this.setState({
             badItems: [...this.state.badItems, {id, title: text, tag}],
           })
 
-        } else if (type == 'nue') {
+        } else if (type === 'nue') {
           
           this.setState({
             neutralItems: [...this.state.neutralItems, {id, title: text, tag}],
@@ -79,6 +79,8 @@ class Sentiment extends Component {
         this.setState({
           isLoading: false
         })
+
+        return item
 
       })
     });
@@ -105,7 +107,7 @@ class Sentiment extends Component {
                 <Headspan>{badItems.length} items</Headspan>
               </FlexRowBetween>
             </Head>
-            {badItems.length == 0 ? 
+            {badItems.length === 0 ? 
               <NoResult>No result found</NoResult>
               : badItems.map(item => (
               <Box item={item} />
@@ -119,7 +121,7 @@ class Sentiment extends Component {
                 <Headspan>{goodItems.length} items</Headspan>
               </FlexRowBetween>
             </Head>
-            {goodItems.length == 0 ? 
+            {goodItems.length === 0 ? 
              <NoResult>No result found</NoResult>
               : goodItems.map(item => (
               <Box item={item} />
@@ -133,7 +135,7 @@ class Sentiment extends Component {
                 <Headspan>{neutralItems.length} items</Headspan>
               </FlexRowBetween>
             </Head>
-            {neutralItems.length == 0 ? 
+            {neutralItems.length === 0 ? 
              <NoResult>No result found</NoResult>
               : neutralItems.map(item => (
               <Box item={item} />
